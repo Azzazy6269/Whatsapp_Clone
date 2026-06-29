@@ -1,8 +1,23 @@
 const Chat = require('../models/Chat');
 const User = require('../models/User');
 
-const accessOrCreateChat = async (currentUserId, targetUserId) => {
-  if (!targetUserId) {
+const accessOrCreateChat = async (currentUserId, targetUserId, targetEmail) => {
+  let resolvedUserId = targetUserId;
+
+  if (typeof resolvedUserId === "string" && resolvedUserId.includes("@")) {
+    targetEmail = resolvedUserId;
+    resolvedUserId = undefined;
+  }
+
+  if (!resolvedUserId && targetEmail) {
+    const user = await User.findOne({ email: targetEmail });
+    if (!user) {
+      throw new Error("User not found with this email");
+    }
+    resolvedUserId = user._id; 
+  }
+
+  if (!resolvedUserId) {
     throw new Error("UserId param not sent with request");
   }
 
@@ -10,7 +25,7 @@ const accessOrCreateChat = async (currentUserId, targetUserId) => {
     isGroupChat: false,
     $and: [
       { users: { $elemMatch: { $eq: currentUserId } } },
-      { users: { $elemMatch: { $eq: targetUserId } } },
+      { users: { $elemMatch: { $eq: resolvedUserId } } },
     ],
   })
     .populate("users", "-password")
@@ -27,7 +42,7 @@ const accessOrCreateChat = async (currentUserId, targetUserId) => {
     const chatData = {
       chatName: "sender",
       isGroupChat: false,
-      users: [currentUserId, targetUserId],
+      users: [currentUserId, resolvedUserId],
     };
 
     const createdChat = await Chat.create(chatData);

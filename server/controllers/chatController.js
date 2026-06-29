@@ -1,13 +1,16 @@
 const chatService = require('../services/chatService');
 
 const accessChat = async (req, res) => {
-  const { userId } = req.body;
+  const { userId, email } = req.body;
 
   try {
-    const chat = await chatService.accessOrCreateChat(req.user._id, userId);
+    const chat = await chatService.accessOrCreateChat(req.user._id, userId, email);
     res.status(200).json(chat);
   } catch (error) {
-    if (error.message === "UserId param not sent with request") {
+    if (
+      error.message === "UserId param not sent with request" || 
+      error.message === "User not found with this email"
+    ) {
       return res.status(400).json({ message: error.message });
     }
     res.status(500).json({ message: error.message });
