@@ -11,10 +11,12 @@ app.use(express.json());
 
 
 const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
 connectDB();
-app.use('/api/users', userRoutes);
 
+const userRoutes = require('./routes/userRoutes');
+const chatRoutes = require('./routes/chatRoutes');
+app.use('/api/users', userRoutes);
+app.use('/api/chats', chatRoutes);
 
 const server = http.createServer(app);
 
