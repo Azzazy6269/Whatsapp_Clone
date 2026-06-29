@@ -6,9 +6,15 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const app = express();
-
 app.use(cors());
 app.use(express.json());
+
+
+const connectDB = require('./config/db');
+const userRoutes = require('./routes/userRoutes');
+connectDB();
+app.use('/api/users', userRoutes);
+
 
 const server = http.createServer(app);
 
