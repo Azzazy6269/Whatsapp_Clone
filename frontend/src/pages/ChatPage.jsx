@@ -14,10 +14,11 @@ const ChatPage = () => {
   }, [navigate]);
 
   return (
-    <div className="w-full h-screen bg-base-200 flex overflow-hidden">
-      {user && <MyChats />}
-      
-      {user && <ChatBox />}
+    <div className="w-full h-screen bg-[#eae6df] flex overflow-hidden antialiased font-sans select-none">
+      <div className="w-full h-full flex bg-white shadow-2xl overflow-hidden relative">
+        {user && <MyChats />}            
+        {user && <ChatBox />}
+      </div>
     </div>
   );
 };
