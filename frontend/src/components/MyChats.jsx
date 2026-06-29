@@ -71,7 +71,7 @@ const MyChats = () => {
         selectedChat ? "hidden md:flex" : "flex"
       }`}
     >
-      <div className="p-4 flex justify-between items-center bg-[#075E54] text-white shadow-sm z-10">
+      <div className="py-1 px-4 flex justify-between items-center bg-[#075E54] text-white shadow-sm z-10">
         <div>
           <h2 className="text-xl font-bold tracking-wide">Chats 💬</h2>
           <p className="text-[11px] text-emerald-200 opacity-90 mt-0.5">Logged in as: {user?.name}</p>

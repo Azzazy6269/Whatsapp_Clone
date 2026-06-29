@@ -106,7 +106,7 @@ const ChatBox = () => {
         selectedChat ? "flex" : "hidden md:flex"
       }`}
     >
-      <div className="p-4 bg-[#075E54] text-white flex items-center gap-3 shadow-md z-10">
+      <div className="py-1 px-4 bg-[#075E54] text-white flex items-center gap-3 shadow-md z-10">
         <button 
           className="btn btn-ghost btn-sm md:hidden font-bold text-white hover:bg-[#128C7E]"
           onClick={() => setSelectedChat(null)}
